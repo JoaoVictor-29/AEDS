@@ -118,7 +118,21 @@ bool remove_i_esimo(Lista * ap_lista, int i){
 /*Retorna o valor do i-ésimo elemento da lista, caso ele exista.
 Retorna -1 caso contrário. As posições são contadas a partir  de 1, sendo 1 a primeira posição*/
 int recupera_i_esimo(Lista lista, int i){
+		No *no_novo = Lista;
+		int cont = 1;
 
+		//verificar se a lista está vazia
+		if(Lista == NULL)
+			return -1;
+
+		//Percorre a lista até achar
+		while(no_novo != NULL && cont < i){
+			no_novo = no_novo -> proximo;
+			cont++;
+		}
+
+	if(no_novo != NULL && cont == i){
+		
 }
 
 /* Retorna o tamanho da lista */
