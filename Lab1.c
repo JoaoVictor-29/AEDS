@@ -201,7 +201,7 @@ int busca(Lista lista, int valor){
                         cont++;
                 }
         }
-        return 0;
+        return -1;
 }
 
 
