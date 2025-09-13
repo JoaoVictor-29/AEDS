@@ -4,7 +4,7 @@
 
 /*inicializa a lista como lista vazia*/
 void inicializa_lista(Lista * ap_lista){
-        ap_lista ==NULL;
+       (* ap_lista) = NULL;
 }
 
 /*Insere valor no fim da lista por ap_lista. ap_lista aponta para o inicio da lista*/
@@ -92,11 +92,11 @@ int remove_inicio(Lista * ap_lista){
 foi removido. As posições são contadas a partir de 1, sendo 1 a primeira posição*/
 bool remove_i_esimo(Lista * ap_lista, int i){
     No *no_novo = *ap_lista;
-	No *anterior == NULL;
+    No *anterior = NULL;
     int cont = 1;
         //Verificar se a lista está vazia
     if(*ap_lista == NULL)
-            return -1;
+            return false;
 
         //percorre a lista até encontrar a posição do elemento
         //anterior vai ficar i-1 e no_novo vai ficar na posição do elemento
@@ -107,36 +107,40 @@ bool remove_i_esimo(Lista * ap_lista, int i){
     }
 
     if(no_novo == NULL)
-        	return -1;
+        	return false;
 
-	if(i == 1){
-		*ap_lista = no_novo -> proximo;//aqui atualiza o inicio/cabeça da lista
-	}else{
-		anterior -> proximo = no_novo -> proximo;//aqui remove o nó ligando o anterior ao próximo
-	}
-	free(no_novo);
-	return 0;
+    if(i == 1){
+	*ap_lista = no_novo -> proximo;//aqui atualiza o inicio/cabeça da lista
+    }else{
+	anterior -> proximo = no_novo -> proximo;//aqui remove o nó ligando o anterior ao próximo
+    }
+    free(no_novo);
+    return true;
 }
 
 
 /*Retorna o valor do i-ésimo elemento da lista, caso ele exista.
 Retorna -1 caso contrário. As posições são contadas a partir  de 1, sendo 1 a primeira posição*/
 int recupera_i_esimo(Lista lista, int i){
-		No *no_novo = lista;
-		int cont = 1;
-		//verificar se a lista está vazia
-		if(lista == NULL || i <= 0)
-			return -1;
+	No *no_novo = lista;
+	int cont = 1;
+	int valorRecuperado = 0;
+	//verificar se a lista está vazia
+	if(lista == NULL)
+		return -1;
 
-		//Percorre a lista até achar
-		while(no_novo != NULL && cont < i){
-			no_novo = no_novo -> proximo;
-			cont++;
-		}
+	//Percorre a lista até achar
+	while(no_novo != NULL && cont < i){
+		no_novo = no_novo -> proximo;
+		cont++;
+	}
 
 	if(no_novo != NULL && cont == i){
-		return no_novo -> valor;
+		valorRecuperado = no_novo -> valor;
+	}else{
+		return -1;
 	}
+	return valorRecuperado;
 }
 
 /* Retorna o tamanho da lista */
@@ -157,7 +161,7 @@ int tamanho(Lista lista){
  * Retorna o número de ocorrências removidas */
 int remove_ocorrencias(Lista *ap_lista, int valor){
         if(*ap_lista == NULL)
-                return 0;
+                return -1;
 
         No *no_atual = (*ap_lista);
         No *anterior = NULL;
@@ -167,17 +171,18 @@ int remove_ocorrencias(Lista *ap_lista, int valor){
         while(no_atual != NULL){
                 if(no_atual -> valor == valor){
                         if(anterior == NULL){
-                                *ap_lista = no_novo -> proximo;
+                                *ap_lista = no_atual -> proximo;
                         }else{
-                                anterior -> proximo = no_novo -> proximo;
+                                anterior -> proximo = no_atual -> proximo;
                         }
                         cont++;
-                        aux = no_novo;
-                        no_novo = no_novo -> proximo;
+                        aux = no_atual;
+                        no_atual = no_atual -> proximo;
                         free(aux);
                 }else{
-                        anterior = no_novo;
-                        no_novo = no_novo -> proximo;
+                        anterior = no_atual;
+                        no_atual = no_atual -> proximo;
+		}
         }
         return cont;
 }
@@ -187,10 +192,10 @@ int remove_ocorrencias(Lista *ap_lista, int valor){
  * Retorna a posição na lista, começando de 1 = primeira posição.
  * Retorna -1 caso não encontrado. */
 int busca(Lista lista, int valor){
-        if(lista == NULL)
-                return 0;
+        /*if(lista == NULL)
+                return 0;*/
 
-        No *no_novo = (lista);
+        No *no_novo = lista;
         int cont = 1;
 
         while (no_novo != NULL){
@@ -209,30 +214,28 @@ int busca(Lista lista, int valor){
  * (1,3,2,3,4,2,3,1,4)
  * em uma linha separada. */
 void imprime(Lista lista){
-	No *no_novo = (lista);
+	No *no_novo = lista;
 	printf("(");
 
 	while(no_novo != NULL){
 		printf("%d", no_novo -> valor);
-		if(No_novo -> proximo = NULL){
+		if(no_novo -> proximo != NULL){
 			printf(",");
 		}
 		no_novo = no_novo -> proximo;
 	}
-	printf(")");	
+	printf(")\n");	
 }
 
 /* Desaloca toda a memória alocada da lista. */
-void desaloca_lista(lista * ap_lista){
+void desaloca_lista(Lista *ap_lista){
 	No *atual = (*ap_lista);
 	No *desaloca = atual;
 	
-	While(atual != atual){
+	while(atual != NULL){
 		desaloca = atual;
 		atual = atual -> proximo;
 		free(desaloca);
 	}
 	(*ap_lista) = NULL;
 }
-
-    
