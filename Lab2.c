@@ -4,8 +4,13 @@
 
 //inicializa um polinomio vazio
 void inicializa_polinomio(Polinomio * ap_pol){
-        (*ap_pol) = NULL;
-}       
+        *ap_pol = (No*)malloc(sizeof(No));
+
+        if(*ap_pol == NULL)return;
+
+        (*ap_pol) -> prox = *ap_pol;
+        (*ap_pol) -> antec = *ap_pol;
+}      
 
 /* Define que o coeficiente de grau do pol eh igual a pol. Deve manter os
  * coeficientes ordenados por grau*/
