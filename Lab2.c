@@ -27,21 +27,13 @@ void zera(Polinomio pol){
 /*Computa a soma dos polinomio a e b colocando o resultado em res.
  * Libera a memoria anteriormente uilizada pelos nos descartados de res, e sobreescreve res.*/
 void soma(Polinomio res, Polinomio a, Polinomio b){
-        Polinomio aux;
-       /*liberando memoria antiga de res*/
-        while(res != NULL){
-               aux = res;
-               res = res -> prox;
-               free(aux);
-        }
+       No *atualA, *atualB;
+       atualA = a -> prox;
+       atualB = b -> prox;
        
-       while(a != NULL && b != NULL){
-              Polinomio no_novo = (Polinomio)malloc(sizeof(No));
-              if(no_novo == NULL){
-                     return;
-              }
-
-              if(a -> grau == b -> grau){
+       while(atualA != a || atualB != b){
+              Polinomi
+              if(atualA -> grau == atualB -> grau){
                      no_novo -> coef = a -> coef + b -> coef;
                      a = a -> prox;
                      b = b -> prox;
