@@ -27,7 +27,15 @@ void zera(Polinomio pol){
 /*Computa a soma dos polinomio a e b colocando o resultado em res.
  * Libera a memoria anteriormente uilizada pelos nos descartados de res, e sobreescreve res.*/
 void soma(Polinomio res, Polinomio a, Polinomio b){
-        
+        Polinomio aux;
+       /*liberando memoria antiga de res*/
+        while(res != NULL){
+               aux = res;
+               res = res -> prox;
+               free(aux);
+        }
+       
+       Polinomio no_novo;
 }       
 
 /* Computa a subtracao dos polinomios a e b colocando o resultado em res.
