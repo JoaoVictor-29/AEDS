@@ -35,7 +35,27 @@ void soma(Polinomio res, Polinomio a, Polinomio b){
                free(aux);
         }
        
-       Polinomio no_novo;
+       while(a != NULL && b != NULL){
+              Polinomio no_novo = (Polinomio)malloc(sizeof(No));
+              if(no_novo == NULL){
+                     return;
+              }
+
+              if(a -> grau == b -> grau){
+                     no_novo -> coef = a -> coef + b -> coef;
+                     a = a -> prox;
+                     b = b -> prox;
+              }
+
+              if(a -> grau > b -> grau){
+                     novo -> coef = a -> coef;
+                     a = a -> coef;
+              }else{
+                     novo -> coef = b -> coef;
+                     b = b -> coef;
+              }
+
+              if
 }       
 
 /* Computa a subtracao dos polinomios a e b colocando o resultado em res.
