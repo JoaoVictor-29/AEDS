@@ -1,0 +1,39 @@
+// VETOR pesos[n] e VETOR valores[n] contêm os dados de entrada
+
+// indice: O item atual que estamos considerando (de 0 até n)
+// peso_atual: O peso total dos itens já incluídos na mochila
+FUNÇÃO resolver(indice, peso_atual):
+
+    // Caso Base: Se já consideramos todos os itens (índice == n)
+    // não há mais valor a adicionar.
+    SE indice == n:
+        RETORNAR 0
+
+    // --- Opção 1: NÃO incluir o item 'indice' ---
+    // Simplesmente passamos para o próximo item (indice + 1)
+    // mantendo o mesmo peso_atual.
+    valor_sem_item = resolver(indice + 1, peso_atual)
+
+    // --- Opção 2: INCLUIR o item 'indice' ---
+    valor_com_item = 0 // Valor padrão se não pudermos incluir
+
+    // Verificamos se o item cabe na mochila
+    SE peso_atual + pesos[indice] <= M:
+        // Se couber, o valor é: o valor deste item +
+        // o valor máximo que podemos obter do resto dos itens.
+        valor_com_item = valores[indice] + resolver(indice + 1, peso_atual + pesos[indice])
+
+    // A solução ótima para este estado é o máximo entre as duas opções
+    RETORNAR max(valor_sem_item, valor_com_item)
+
+// Função Principal
+FUNÇÃO principal():
+    LER n, M
+
+    PARA i DE 0 ATÉ n-1:
+        LER pesos[i], valores[i]
+
+    // Começamos a recursão no primeiro item (0) e com peso atual 0
+    resultado_otimo = resolver(0, 0)
+
+    IMPRIMIR resultado_otimo
