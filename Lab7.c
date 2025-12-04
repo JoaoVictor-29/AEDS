@@ -12,7 +12,7 @@ typedef struct no_arvore{
 }arvore;
 
 typedef struct no_pilhano{
-	arvore *arv;
+	arvore *no;
 	struct no_pilhano *prox;
 }pilhaNo;
 
@@ -47,7 +47,7 @@ Arvore * novoNo_op(char op){
 
 void empilharNo(pilhaNoArv **topo, Arvore *no){
 	pilhaNoArv *novo = (pilhaNoArv*)malloc(sizeof(pilhaNoArv));
-	novo -> no = arv;
+	novo -> no = no;
 	novo -> prox = *topo;
 	*topo = novo;
 }
@@ -64,18 +64,18 @@ Arvore * desempilharNo(pilhaNoArv **topo){
 
 void empilharOp(pilhaOpe **topo, char op){
 	pilhaOpe *novo = (pilhaOpe*)malloc(sizeof(pilhaOpe));
-	novo -> op = arv;
+	novo -> op = op;
 	novo -> prox = *topo;
 	*topo = novo;
 }
 
 char desempilharOp(pilhaOpe **topo){
-	if(*topo == NULL)return NULL;
+	if(*topo == NULL) return '\0';
 
 	pilhaOpe *remover = *topo;
 	char dado = remover -> op;
 	*topo = remover -> prox;
-	free(remover);	
+	free(remover);
 	return dado;
 }
 
@@ -87,13 +87,13 @@ int precedencia(char op){
 	return 1;//prioridade baixa
 }
 
-void criarSubArvore(pilhaNoArv **pilhano, pilhaNoOp **pilhaop){
+void criarSubArvore(pilhaNoArv **pilhano, pilhaOpe **pilhaop){
 	//tira o operador
 	char op = desempilharOp(pilhaop);
 	
 	//desempilha os nós em ordem inversa
-	pilhaNoArv *noDir = desempilharNo(pilhano);
-	pilhaNoArv *noEsq = desempilharNo(pilhano);
+	Arvore *noDir = desempilharNo(pilhano);
+	Arvore *noEsq = desempilharNo(pilhano);
 	
 	//cria no pai para o operador
 	Arvore *novo = novoNo_op(op);
@@ -102,7 +102,7 @@ void criarSubArvore(pilhaNoArv **pilhano, pilhaNoOp **pilhaop){
 	novo -> esq = noEsq;
 
 	//devolver para a pilha de nós
-	empilharNo = (pilhano, novo);
+	empilharNo(pilhano, novo);
 }
 
 int calculo(Arvore *apArv){
@@ -127,6 +127,7 @@ int calculo(Arvore *apArv){
 		case '%':
 			return resEsq % resDir;
 	}
+    return 0;
 }
 
 void impressaoPosFixa(Arvore *a){
@@ -139,7 +140,9 @@ void impressaoPosFixa(Arvore *a){
 		}else{
 			printf("%c ", a -> op);
 		}
+    }
 }
+
 
 void impressaoPreFixa(Arvore *b){
 	if(b != NULL){
@@ -151,19 +154,20 @@ void impressaoPreFixa(Arvore *b){
 
 		impressaoPreFixa(b -> esq);
 		impressaoPreFixa(b -> dir);
+    }
+
 }
 
 int main(){
 	
 	//inicializando as pilhas como NULL
 	pilhaNoArv *pilhano = NULL;
-	pilhaNoOp *pilhaop = NULL;
+	pilhaOpe *pilhaop = NULL;
 
 	int num;
 	char c;
 
-	while(1){
-
+	/*implementação da leitura/avaliação ainda não implementada */
 
 	return 0;
 }
